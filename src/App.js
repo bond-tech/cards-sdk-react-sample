@@ -1,9 +1,11 @@
 import {useEffect, useState, useRef, useCallback} from 'react';
-import BondCards from 'bond-sdk-cards';
+import SDK from './sdk';
 import './App.css';
 import Dialog from './components/Dialog';
 
 const INITIAL_RESULT_TEXT = 'Submit a form to see result.';
+
+const sdk = new SDK({live: false});
 
 function App() {
     const [isOpen, setOpen] = useState(false);
@@ -12,15 +14,13 @@ function App() {
     const ccNewPinRef = useRef(null);
     const ccConfirmPinRef = useRef(null);
 
-    const bondCards = new BondCards({live: false});
-
     const handleClose = () => {
         setOpen(!isOpen);
         setResult(INITIAL_RESULT_TEXT);
     }
 
     useEffect(() => {
-        isOpen && bondCards
+        isOpen && sdk
             .field({
                 selector: '#cc-current-pin',
                 type: 'current_pin',
@@ -39,7 +39,7 @@ function App() {
     }, [isOpen, currentPinRef])
 
     useEffect(() => {
-        isOpen && bondCards
+        isOpen && sdk
             .field({
                 selector: '#cc-new-pin',
                 type: 'new_pin',
@@ -57,7 +57,7 @@ function App() {
     }, [isOpen, ccNewPinRef])
 
     useEffect(() => {
-        isOpen && bondCards
+        isOpen && sdk
             .field({
                 selector: '#cc-confirm-pin',
                 type: 'confirm_pin',
@@ -76,7 +76,7 @@ function App() {
 
     const onSubmit = useCallback(() => {
         if (isOpen) {
-            bondCards.submit({
+            sdk.submit({
                 cardId: process.env.REACT_APP_CARD_ID,
                 identity: process.env.REACT_APP_IDENTITY,
                 authorization: process.env.REACT_APP_AUTHORIZATION,
