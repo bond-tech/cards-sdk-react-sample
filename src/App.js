@@ -5,14 +5,14 @@ import Dialog from './components/Dialog';
 
 const INITIAL_RESULT_TEXT = 'Submit a form to see result.';
 
+const bondCards = new BondCards({live: false});
+
 function App() {
     const [isOpen, setOpen] = useState(false);
     const [result, setResult] = useState(INITIAL_RESULT_TEXT);
     const currentPinRef = useRef(null);
     const ccNewPinRef = useRef(null);
     const ccConfirmPinRef = useRef(null);
-
-    const bondCards = new BondCards({live: false});
 
     const handleClose = () => {
         setOpen(!isOpen);
