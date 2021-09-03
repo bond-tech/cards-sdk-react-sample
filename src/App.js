@@ -5,19 +5,22 @@ import Dialog from './components/Dialog';
 
 const INITIAL_RESULT_TEXT = 'Submit a form to see result.';
 
-const sdk = new SDK({live: false});
 
 function App() {
     const [isOpen, setOpen] = useState(false);
     const [result, setResult] = useState(INITIAL_RESULT_TEXT);
+    const [sdk, setSdk] = useState(null);
     const currentPinRef = useRef(null);
     const ccNewPinRef = useRef(null);
     const ccConfirmPinRef = useRef(null);
-
     const handleClose = () => {
         setOpen(!isOpen);
         setResult(INITIAL_RESULT_TEXT);
     }
+
+    useEffect(() => {
+        setSdk(new SDK({live: false}))
+    },[isOpen])
 
     useEffect(() => {
         isOpen && sdk
