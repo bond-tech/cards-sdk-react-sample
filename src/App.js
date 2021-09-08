@@ -99,7 +99,10 @@ function App() {
     return (
         <div className='App'>
             <button className='button' onClick={handleClose}>Open dialog</button>
-            {isOpen && <Dialog onClose={() => setOpen(false)}>
+            {isOpen && <Dialog onClose={() => {
+                setOpen(false);
+                bondCards.createFormInstance();
+            }}>
                 <div id='cc-form'>
                     <div className='field'>
                         Current PIN
